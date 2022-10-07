@@ -11,6 +11,8 @@ public class Ships : MonoBehaviour
     protected float _rotSpeed;
     [SerializeField]
     protected float _movSpeed;
+    [SerializeField]
+    protected int _health;
    
     private void FixedUpdate()
     {

@@ -10,7 +10,7 @@ public class PlayerShip : Ships
     private void Start()
     {
         _angle = 0;
-        _direction = -Vector2.up;
+        _direction = Vector2.up;
     }
 
 

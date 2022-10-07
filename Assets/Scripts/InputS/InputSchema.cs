@@ -24,6 +24,8 @@ public class InputSchema : ScriptableObject
             {
                 return true;
             }
+
+            //Input.GetButtonDown(KeyCode.)
         }
         return false;
     }
