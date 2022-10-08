@@ -9,6 +9,9 @@ public class EnemyChaser : Ships
     private float _dist;
     private float _distAux;
 
+    [SerializeField]
+    private int _damage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,9 @@ public class EnemyChaser : Ships
 
         _targetID = Random.Range(0, _target.Length);
 
+        _health = _maxHealth;
+
+        _sprite = GetComponent<SpriteRenderer>();
 
     }
 
@@ -54,5 +60,19 @@ public class EnemyChaser : Ships
         Vector2 _targetDir = _target[_targetID].transform.position - transform.position;
 
         _angle = Mathf.Atan2(_targetDir.x, _targetDir.y) * Mathf.Rad2Deg;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collided;
+
+        collided = collision.gameObject;
+
+        if (collided.CompareTag("Player") || collided.CompareTag("Enemy"))
+        {
+            collided.GetComponent<Ships>().ChangeHealth(-_damage);
+
+            GameObject.Destroy(transform.parent.gameObject, 0.1f);
+        }
     }
 }

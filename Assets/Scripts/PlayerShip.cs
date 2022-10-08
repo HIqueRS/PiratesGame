@@ -11,6 +11,9 @@ public class PlayerShip : Ships
     {
         _angle = 0;
         _direction = Vector2.up;
+        _health = _maxHealth;
+
+        _sprite = GetComponent<SpriteRenderer>();
     }
 
 
@@ -21,6 +24,11 @@ public class PlayerShip : Ships
         if(_input.InputForward())
         {
             MoveForward();
+        }
+
+        if(_input.InputFire1())
+        {
+            ShootForward();//ou fazer só shoot depois?
         }
     }
 

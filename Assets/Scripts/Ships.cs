@@ -12,8 +12,21 @@ public class Ships : MonoBehaviour
     [SerializeField]
     protected float _movSpeed;
     [SerializeField]
-    protected int _health;
-   
+    public int _maxHealth;
+    [HideInInspector]
+    public int _health;
+    [SerializeField]
+    protected HealthBar _healthBar;
+
+    [SerializeField]
+    protected Sprite[] _states;
+
+    [SerializeField]
+    protected SpriteRenderer _sprite;
+
+    [SerializeField]
+    protected GameObject _bullet;
+
     private void FixedUpdate()
     {
         Rotation();
@@ -30,5 +43,42 @@ public class Ships : MonoBehaviour
 
         Vector3 position = transform.position;
         transform.position = Vector2.MoveTowards(position, position + transform.TransformDirection(_direction), _movSpeed * Time.deltaTime);
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        _health += amount;
+
+        _healthBar.AtualizeHealth(_health);
+
+        ChangeSprite();
+    }
+
+    public void ChangeMaxHealth(int amount)
+    {
+        _maxHealth += amount;
+
+        _healthBar.AtualizeMaxHealth(_maxHealth);
+
+        ChangeSprite();
+
+    }
+
+    void ChangeSprite()
+    {
+        if(_health < _maxHealth/3)
+        {
+            _sprite.sprite = _states[1];
+        }
+        else if(_health < (_maxHealth/3)*2)
+        {
+            _sprite.sprite = _states[0];
+        }
+
+    }
+
+    public void ShootForward()
+    {
+        GameObject.Instantiate(_bullet,transform.position + (transform.TransformDirection(_direction)*0.6f),Quaternion.identity);
     }
 }
