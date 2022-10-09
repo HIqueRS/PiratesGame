@@ -27,9 +27,33 @@ public class Ships : MonoBehaviour
     [SerializeField]
     protected GameObject _bullet;
 
+    protected float _bulletInitPos;
+
+    [SerializeField]
+    protected int _damage;
+
+    [SerializeField]
+    protected float _fireRate;
+
+    protected float _timeRate;
+
+    [SerializeField]
+    protected float _shootRange;
+
+    [SerializeField]
+    protected Animator _animator;
+
+    [SerializeField]
+    protected int _point;
+
+    [SerializeField]
+    protected Configs _configs;
+
     private void FixedUpdate()
     {
         Rotation();
+
+        _timeRate += Time.deltaTime;
     }
 
     private void Rotation()
@@ -66,7 +90,11 @@ public class Ships : MonoBehaviour
 
     void ChangeSprite()
     {
-        if(_health < _maxHealth/3)
+        if(_health <= 0)
+        {
+            Die();
+        }
+        else if(_health < _maxHealth/3)
         {
             _sprite.sprite = _states[1];
         }
@@ -75,10 +103,44 @@ public class Ships : MonoBehaviour
             _sprite.sprite = _states[0];
         }
 
+
     }
 
-    public void ShootForward()
+    void Die()
     {
-        GameObject.Instantiate(_bullet,transform.position + (transform.TransformDirection(_direction)*0.6f),Quaternion.identity);
+        _animator.SetTrigger("Die");
+
+        _configs.AddPoints(_point);
+        
+        Destroy(transform.parent.gameObject,1f);
+    }
+
+    public void ShootForward(int damage, float range)
+    {
+        Vector3 position, direction;
+
+        direction = transform.TransformDirection(_direction);
+        position = transform.position + (direction * 0.6f);
+
+        InstantiateBullet(position, direction, damage, range);
+
+        
+    }
+
+    public void InstantiateBullet(Vector2 position ,Vector2 direction, int damage,float range)
+    {
+        GameObject bullet;
+        Shoot shoot;
+        bullet = GameObject.Instantiate(_bullet, new Vector3(position.x, position.y, -2), Quaternion.identity) ;
+
+        shoot = bullet.GetComponent<Shoot>();
+
+        shoot.SetDirection(direction);
+        shoot.SetDamage(damage);
+        shoot.SetRange(range);
+
+
+
+        _timeRate = 0;
     }
 }

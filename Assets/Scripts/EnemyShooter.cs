@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyChaser : Ships
+public class EnemyShooter : Ships
 {
     private GameObject[] _target;
     private int _targetID;
     private float _dist;
     private float _distAux;
 
-    
+    //[SerializeField]
+    //private float _bulletRange;
 
     // Start is called before the first frame update
     void Start()
@@ -25,23 +26,44 @@ public class EnemyChaser : Ships
 
         _sprite = GetComponent<SpriteRenderer>();
 
+
+
     }
+   
 
     // Update is called once per frame
     void Update()
     {
-
-        if(_health > 0)
+        if(_health> 0)
         {
             DefineClosestTarget();
 
             SetAngleToTarget();
 
-            MoveForward();
+            if (_dist > _shootRange / 2)
+            {
+                MoveForward();
+            }
+
+            if (_timeRate > 1 / _fireRate)
+            {
+                ShootForward(_damage, _shootRange);
+            }
         }
 
-        
+       
+    }
 
+
+    void SetAngleToTarget()
+    {
+        if(_target[_targetID] != null)
+        {
+            Vector2 _targetDir = _target[_targetID].transform.position - transform.position;
+
+            _angle = Mathf.Atan2(_targetDir.x, _targetDir.y) * Mathf.Rad2Deg;
+        }
+       
     }
 
     void DefineClosestTarget()
@@ -50,6 +72,7 @@ public class EnemyChaser : Ships
 
         for (int i = 0; i < _target.Length; i++)
         {
+            if(_target[i] != null)
             _distAux = Vector2.Distance(transform.position, _target[i].transform.position);
             if (_distAux < _dist)
             {
@@ -59,24 +82,5 @@ public class EnemyChaser : Ships
         }
     }
 
-    void SetAngleToTarget()
-    {
-        Vector2 _targetDir = _target[_targetID].transform.position - transform.position;
 
-        _angle = Mathf.Atan2(_targetDir.x, _targetDir.y) * Mathf.Rad2Deg;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        GameObject collided;
-
-        collided = collision.gameObject;
-
-        if (collided.CompareTag("Player") )
-        {
-            collided.GetComponent<Ships>().ChangeHealth(-_damage);
-
-            GameObject.Destroy(transform.parent.gameObject, 0.1f);
-        }
-    }
 }

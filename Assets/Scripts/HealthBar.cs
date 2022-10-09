@@ -25,6 +25,7 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_shipGO != null)
         transform.position = _shipGO.transform.position + new Vector3(0, 0.8f);
 
         _greenBar.fillAmount = (float)_shipScript._health / (float)_shipScript._maxHealth;
