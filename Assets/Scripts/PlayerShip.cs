@@ -17,6 +17,10 @@ public class PlayerShip : Ships
         _sprite = GetComponent<SpriteRenderer>();
 
         _configs.ResetPoint();
+
+        _died = false;
+
+        _isPlayer = true;
     }
 
 

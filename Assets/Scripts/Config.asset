@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dbcd19810c1c77489041a488a2ddc6b, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  points: 0
+  _points: 0
+  _numberOfPlayer: 1
+  _numberOfDeads: 0
+  _timeToEnd: 96.37578
+  _spawnRate: 1.5

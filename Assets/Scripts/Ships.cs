@@ -49,6 +49,10 @@ public class Ships : MonoBehaviour
     [SerializeField]
     protected Configs _configs;
 
+    protected bool _died;
+
+    protected bool _isPlayer;
+
     private void FixedUpdate()
     {
         Rotation();
@@ -108,11 +112,22 @@ public class Ships : MonoBehaviour
 
     void Die()
     {
-        _animator.SetTrigger("Die");
+        if(!_died)
+        {
+            _animator.SetTrigger("Die");
 
-        _configs.AddPoints(_point);
+            _configs.AddPoints(_point);
+
+            Destroy(transform.parent.gameObject, 1f);
+
+            if(_isPlayer)
+            {
+                _configs.AddDeath();
+            }
+
+            _died = true;
+        }
         
-        Destroy(transform.parent.gameObject,1f);
     }
 
     public void ShootForward(int damage, float range)

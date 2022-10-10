@@ -25,6 +25,10 @@ public class EnemyChaser : Ships
 
         _sprite = GetComponent<SpriteRenderer>();
 
+        _died = false;
+
+        _isPlayer = false;
+
     }
 
     // Update is called once per frame
@@ -50,20 +54,28 @@ public class EnemyChaser : Ships
 
         for (int i = 0; i < _target.Length; i++)
         {
-            _distAux = Vector2.Distance(transform.position, _target[i].transform.position);
-            if (_distAux < _dist)
+            if (_target[i] != null)
             {
-                _dist = _distAux;
-                _targetID = i;
+                _distAux = Vector2.Distance(transform.position, _target[i].transform.position);
+                if (_distAux < _dist)
+                {
+                    _dist = _distAux;
+                    _targetID = i;
+                }
             }
+            
         }
     }
 
     void SetAngleToTarget()
     {
-        Vector2 _targetDir = _target[_targetID].transform.position - transform.position;
+        if(_target[_targetID] != null)
+        {
+            Vector2 _targetDir = _target[_targetID].transform.position - transform.position;
 
-        _angle = Mathf.Atan2(_targetDir.x, _targetDir.y) * Mathf.Rad2Deg;
+            _angle = Mathf.Atan2(_targetDir.x, _targetDir.y) * Mathf.Rad2Deg;
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

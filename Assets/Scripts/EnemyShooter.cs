@@ -26,7 +26,9 @@ public class EnemyShooter : Ships
 
         _sprite = GetComponent<SpriteRenderer>();
 
+        _died = false;
 
+        _isPlayer = false;
 
     }
    
