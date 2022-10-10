@@ -36,22 +36,27 @@ public class EnemyShooter : Ships
     // Update is called once per frame
     void Update()
     {
-        if(_health> 0)
+        if(!_configs.EveryoneisDead())
         {
-            DefineClosestTarget();
-
-            SetAngleToTarget();
-
-            if (_dist > _shootRange / 2)
+            if (_health > 0)
             {
-                MoveForward();
-            }
+                DefineClosestTarget();
 
-            if (_timeRate > 1 / _fireRate)
-            {
-                ShootForward(_damage, _shootRange);
+                SetAngleToTarget();
+
+                if (_dist > _shootRange / 2)
+                {
+                    MoveForward();
+                }
+
+                if (_timeRate > 1 / _fireRate)
+                {
+                    ShootForward(_damage, _shootRange);
+                }
             }
         }
+
+        
 
        
     }
@@ -59,6 +64,7 @@ public class EnemyShooter : Ships
 
     void SetAngleToTarget()
     {
+        
         if(_target[_targetID] != null)
         {
             Vector2 _targetDir = _target[_targetID].transform.position - transform.position;
@@ -81,6 +87,35 @@ public class EnemyShooter : Ships
                 _dist = _distAux;
                 _targetID = i;
             }
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collided;
+
+        collided = collision.gameObject;
+
+        if (collided.CompareTag("Obstacles"))
+        {
+            GameObject.Destroy(transform.parent.gameObject,0.2f);
+
+            Die(false);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        GameObject collided;
+
+        collided = collision.gameObject;
+
+        if (collided.CompareTag("Obstacles"))
+        {
+            GameObject.Destroy(transform.parent.gameObject,0.2f);
+
+            Die(false);
         }
     }
 

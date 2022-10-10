@@ -224,8 +224,8 @@ MonoBehaviour:
   _shootRange: 10
   _animator: {fileID: 5504891891892378412}
   _point: 0
-  _input: {fileID: 11400000, guid: 96b1c282e30615343911ca66165497bc, type: 2}
   _configs: {fileID: 11400000, guid: c21d95aa9e1d9a045997cbfd8d510c73, type: 2}
+  _input: {fileID: 11400000, guid: 7d6739e55306a6e46885b73b33e0daee, type: 2}
 --- !u!50 &1454653962440125502
 Rigidbody2D:
   serializedVersion: 4

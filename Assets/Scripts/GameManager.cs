@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     private GameObject[] _enemies;
 
     [SerializeField]
+    private GameObject _player;
+
+    [SerializeField]
     private Configs _config;
 
     private float _timePassed;
@@ -16,6 +19,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _timePassed = 0;
+       
     }
 
     // Update is called once per frame
@@ -37,14 +41,21 @@ public class GameManager : MonoBehaviour
         Vector3 position;
         int id;
 
-        position =  (Random.insideUnitCircle.normalized * 10.5f);
+        position =  (Random.insideUnitCircle.normalized * 14.5f);
 
         position = position + transform.position;
 
         id = Random.Range(0, _enemies.Length);
 
+        position = new Vector3(position.x, position.y, -20);
+
         GameObject.Instantiate(_enemies[id], position, Quaternion.identity);
 
+    }
+
+    void SpawnPlayers()
+    {
+        GameObject.Instantiate(_player);
     }
 
 }

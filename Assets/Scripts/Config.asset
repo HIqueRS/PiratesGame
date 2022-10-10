@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _points: 0
   _numberOfPlayer: 1
-  _numberOfDeads: 0
-  _timeToEnd: 96.37578
-  _spawnRate: 1.5
+  _numberOfDeads: 1
+  _timeToEnd: 60
+  _spawnRate: 8.08736

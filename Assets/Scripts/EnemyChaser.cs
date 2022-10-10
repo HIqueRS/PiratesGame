@@ -34,15 +34,19 @@ public class EnemyChaser : Ships
     // Update is called once per frame
     void Update()
     {
-
-        if(_health > 0)
+        if(!_configs.EveryoneisDead())
         {
-            DefineClosestTarget();
+            if (_health > 0)
+            {
+                DefineClosestTarget();
 
-            SetAngleToTarget();
+                SetAngleToTarget();
 
-            MoveForward();
+                MoveForward();
+            }
         }
+
+        
 
         
 
@@ -89,6 +93,25 @@ public class EnemyChaser : Ships
             collided.GetComponent<Ships>().ChangeHealth(-_damage);
 
             GameObject.Destroy(transform.parent.gameObject, 0.1f);
+        }
+
+        if(collided.CompareTag("Obstacles"))
+        {
+            GameObject.Destroy(transform.parent.gameObject,0.2f);
+            Die(false);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        GameObject collided;
+
+        collided = collision.gameObject;
+
+        if (collided.CompareTag("Obstacles"))
+        {
+            GameObject.Destroy(transform.parent.gameObject, 0.2f);
+            Die(false);
         }
     }
 }

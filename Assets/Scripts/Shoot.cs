@@ -20,6 +20,9 @@ public class Shoot : MonoBehaviour
 
     private bool _isDead;
 
+    private bool _fromPlayer;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,7 @@ public class Shoot : MonoBehaviour
         }
         
     }
+
 
     void MoveForward()
     {
@@ -74,6 +78,11 @@ public class Shoot : MonoBehaviour
         _speed = vel;
     }
 
+    public void SetFrom(bool player)
+    {
+        _fromPlayer = player;
+    }
+
     public void SetRange(float range)
     {
         _range = range;
@@ -90,14 +99,38 @@ public class Shoot : MonoBehaviour
 
         GO = collision.gameObject;
 
-        if(GO.CompareTag("Player") || GO.CompareTag("Enemy"))
+        if(_fromPlayer)
         {
-            GO.GetComponent<Ships>().ChangeHealth(-_damage);
+            if ( GO.CompareTag("Enemy"))
+            {
+                GO.GetComponent<Ships>().ChangeHealth(-_damage);
 
-            _anim.SetTrigger("Die");
+                _anim.SetTrigger("Die");
 
-            _isDead = true;
-            GameObject.Destroy(this.gameObject,0.5f);
+                _isDead = true;
+                GameObject.Destroy(this.gameObject, 0.5f);
+            }
+        }
+        else
+        {
+            if (GO.CompareTag("Player") )
+            {
+                GO.GetComponent<Ships>().ChangeHealth(-_damage);
+
+                _anim.SetTrigger("Die");
+
+                _isDead = true;
+                GameObject.Destroy(this.gameObject, 0.5f);
+            }
+        }
+
+        
+
+        if (GO.CompareTag("Obstacles"))
+        {
+            GameObject.Destroy(this.gameObject);
+
+            
         }
     }
 }

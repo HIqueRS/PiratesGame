@@ -23,6 +23,10 @@ public class PlayerShip : Ships
         _isPlayer = true;
     }
 
+    public void SetInput()
+    {
+
+    }
 
     private void Update()
     {

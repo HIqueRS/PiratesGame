@@ -96,7 +96,7 @@ public class Ships : MonoBehaviour
     {
         if(_health <= 0)
         {
-            Die();
+            Die(true);
         }
         else if(_health < _maxHealth/3)
         {
@@ -110,12 +110,13 @@ public class Ships : MonoBehaviour
 
     }
 
-    void Die()
+    protected void Die(bool points)
     {
         if(!_died)
         {
             _animator.SetTrigger("Die");
 
+            if(points)
             _configs.AddPoints(_point);
 
             Destroy(transform.parent.gameObject, 1f);
@@ -153,6 +154,7 @@ public class Ships : MonoBehaviour
         shoot.SetDirection(direction);
         shoot.SetDamage(damage);
         shoot.SetRange(range);
+        shoot.SetFrom(_isPlayer);
 
 
 

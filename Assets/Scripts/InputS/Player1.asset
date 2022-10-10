@@ -15,5 +15,5 @@ MonoBehaviour:
   leftButtons: 61000000
   rightButtons: 64000000
   forwardButtons: 77000000
-  fire1Buttons: 
-  fire2Buttons: 
+  fire1Buttons: 20000000
+  fire2Buttons: 30010000
